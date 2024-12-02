@@ -2,6 +2,7 @@
 
 using namespace std;
 
+int listProduct[50]; // Giả sử có 50 sp
 
 struct Product{
     int ID; // ID san pham
@@ -54,12 +55,36 @@ void payMoney(Cashier* q){
         if(q->F == NULL) q->R = NULL;
 
         q->total += tmp->price;
+        listProduct[tmp->ID]++;
+        cout << "Da thanh toan san pham co ID: " << tmp->ID << " voi gia: " << tmp->price << " VND\n";
 
         delete tmp;
     }
 }
 
+
 int main()
 {
+    Cashier* Vinh = new Cashier();
 
+    //Các sản phẩm xếp hàng thanh toán 
+    addProduct(Vinh, 0001, 200000);
+    addProduct(Vinh, 0002, 150000);
+    addProduct(Vinh, 0003, 300000);
+    addProduct(Vinh, 0001, 50000);
+    
+    payMoney(Vinh);
+    payMoney(Vinh);
+    payMoney(Vinh);
+    payMoney(Vinh);
+
+    char a;
+    do{
+        cout << "Ban muon kiem tra so luong cua san pham nao ? Hay nhap ID !\n";
+        int x;
+        cin >> x;
+        cout << "San pham co ID: " << x << " duoc ban voi so luong : " << listProduct[x] << '\n';
+        cout << "Ban co muon kiem tra nua khong ?(Y/N)\n";
+        cin >> a;
+    }while(a == 'Y' || a == 'y');
 }
